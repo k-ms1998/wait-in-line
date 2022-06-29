@@ -1,4 +1,4 @@
-package fastcampus.GetInLine.controller.api;
+package fastcampus.GetInLine.controller.viewController.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
