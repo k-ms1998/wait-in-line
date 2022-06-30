@@ -1,10 +1,7 @@
 package fastcampus.GetInLine.dto;
 
 import fastcampus.GetInLine.constant.ErrorCode;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @ToString
