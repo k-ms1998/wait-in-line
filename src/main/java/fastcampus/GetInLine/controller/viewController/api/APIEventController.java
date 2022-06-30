@@ -1,16 +1,23 @@
 package fastcampus.GetInLine.controller.viewController.api;
 
+import fastcampus.GetInLine.dto.EventDTO;
+import fastcampus.GetInLine.service.EventService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class APIEventController {
 
+    private final EventService eventService;
+
     @GetMapping("/events")
-    public List<String> getEvents() {
-        return List.of("event1", "event2");
+    public List<EventDTO> getEvents() {
+
+        return List.of();
     }
 
     @PostMapping("/events")
