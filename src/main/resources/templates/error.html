@@ -5,6 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-Error
+<p>
+    Error <span th:text="${statusCode}">???</span>
+</p>
+<p>
+    <li>errorCode: <span th:text="${errorCode}">?</span> </li>
+    <li>errorCode: <span th:text="${message}">?</span> </li>
+</p>
+
 </body>
 </html>
