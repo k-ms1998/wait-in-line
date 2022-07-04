@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -73,6 +74,28 @@ class APIEventControllerTest {
 
         then(eventService).should().findEvents(any(), any(), any(), any(), any());
     }
+
+    @DisplayName("[API][GET] 이벤트 리스트 조회 + 검색 파라미터")
+    @Test
+    void givenWrongParameters_whenRequestingEvents_thenReturnsFailedResponse() throws Exception {
+        // Given
+
+        // When & Then
+        mvc.perform(get("/api/events")
+                        .queryParam("placeId", "-1")
+                        .queryParam("eventName", "H")
+                        .queryParam("eventStatus", EventStatus.OPENED.name())
+                        .queryParam("eventStartDatetime", "2021-01-01T00:00:00")
+                        .queryParam("eventEndDatetime", "2021-01-02T00:00:00"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.errorCode").value(ErrorCode.VALIDATION_ERROR.getCode()))
+                .andExpect(jsonPath("$.message").value(containsString(ErrorCode.VALIDATION_ERROR.getMessage())));
+
+        then(eventService).shouldHaveNoInteractions();
+    }
+
 
     private EventDTO createEventDTO() {
         return EventDTO.of(
