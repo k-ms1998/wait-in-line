@@ -38,5 +38,14 @@ public class EventDTO {
                               Integer currentNumberOfPeople, Integer capacity, String memo) {
         return new EventDTO(placeId, eventName, eventStatus, eventStartDatetime, eventEndDatetime, currentNumberOfPeople, capacity, memo);
     }
+
+    public static EventDTO from(EventDTO eventDTO) {
+        if (eventDTO.equals(null)) {
+            return null;
+        }
+        return EventDTO.of(eventDTO.getPlaceId(), eventDTO.getEventName(), eventDTO.getEventStatus(),
+                eventDTO.getEventStartDatetime(), eventDTO.getEventEndDatetime(), eventDTO.getCurrentNumberOfPeople(),
+                eventDTO.getCapacity(), eventDTO.getMemo());
+    }
 }
 
