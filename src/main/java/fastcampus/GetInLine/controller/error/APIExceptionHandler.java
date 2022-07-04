@@ -34,7 +34,9 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return handleExceptionInternal(ex, ErrorCode.valueOf(status), headers, status, request);
+        ErrorCode errorCode = status.is4xxClientError() ? ErrorCode.SPRING_BAD_REQUEST : ErrorCode.SPRING_INTERNAL_ERROR;
+
+        return handleExceptionInternal(ex, errorCode, headers, status, request);
     }
 
 

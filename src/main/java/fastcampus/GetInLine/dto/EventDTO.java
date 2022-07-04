@@ -3,18 +3,20 @@ package fastcampus.GetInLine.dto;
 import fastcampus.GetInLine.domain.constant.EventStatus;
 import lombok.Getter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
 public class EventDTO {
 
     private Long placeId;
-    private String eventName;
-    private EventStatus eventStatus;
-    private LocalDateTime eventStartDatetime;
-    private LocalDateTime eventEndDatetime;
-    private Integer currentNumberOfPeople;
-    private Integer capacity;
+    @NotBlank private String eventName;
+    @NotNull private EventStatus eventStatus;
+    @NotNull private LocalDateTime eventStartDatetime;
+    @NotNull private LocalDateTime eventEndDatetime;
+    @NotNull private Integer currentNumberOfPeople;
+    @NotNull private Integer capacity;
     private String memo;
 
     public EventDTO() {

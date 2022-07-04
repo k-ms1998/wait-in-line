@@ -96,6 +96,34 @@ class APIEventControllerTest {
         then(eventService).shouldHaveNoInteractions();
     }
 
+    @DisplayName("[API][POST] 이벤트 생성 - 잘못된 정보 입력")
+    @Test
+    void givenWrongEvent_whenCreatingAnEvent_thenReturnsFailedStandardResponse() throws Exception {
+        // Given
+        EventDTO eventResponse = EventDTO.of(
+                1L,
+                " ",
+                null,
+                null,
+                null,
+                -1,
+                0,
+                "마스크 꼭 착용하세요"
+        );
+
+        // When & Then
+        mvc.perform(post("/api/events")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(eventResponse)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.errorCode").value(ErrorCode.SPRING_BAD_REQUEST.getCode()))
+                .andExpect(jsonPath("$.message").value(containsString(ErrorCode.SPRING_BAD_REQUEST.getMessage())));
+
+        then(eventService).shouldHaveNoInteractions();
+    }
+
 
     private EventDTO createEventDTO() {
         return EventDTO.of(
