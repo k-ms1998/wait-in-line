@@ -2,17 +2,19 @@ package fastcampus.GetInLine.repository;
 
 import fastcampus.GetInLine.domain.constant.EventStatus;
 import fastcampus.GetInLine.dto.EventDTO;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class EventRepositoryImpl implements EventRepository {
 
     @Override
     public List<EventDTO> findEvents(Long placeId, String eventName, EventStatus eventStatus,
                                      LocalDateTime eventStartDatetime, LocalDateTime eventEndDatetime) {
-        return null;
+        return List.of();
     }
 
     @Override

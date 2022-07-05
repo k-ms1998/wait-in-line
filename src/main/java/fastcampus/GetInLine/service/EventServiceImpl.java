@@ -5,6 +5,7 @@ import fastcampus.GetInLine.domain.constant.EventStatus;
 import fastcampus.GetInLine.dto.EventDTO;
 import fastcampus.GetInLine.exception.GeneralException;
 import fastcampus.GetInLine.repository.EventRepository;
+import fastcampus.GetInLine.repository.EventRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
 
-    private final EventRepository eventRepository;
+    private final EventRepositoryImpl eventRepository;
 
     @Override
     public List<EventDTO> findEvents(Long placeId, String eventName,
