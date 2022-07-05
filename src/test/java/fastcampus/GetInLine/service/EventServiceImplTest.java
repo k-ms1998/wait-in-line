@@ -1,7 +1,9 @@
 package fastcampus.GetInLine.service;
 
+import fastcampus.GetInLine.constant.ErrorCode;
 import fastcampus.GetInLine.domain.constant.EventStatus;
 import fastcampus.GetInLine.dto.EventDTO;
+import fastcampus.GetInLine.exception.GeneralException;
 import fastcampus.GetInLine.repository.EventRepository;
 import fastcampus.GetInLine.repository.EventRepositoryImpl;
 import org.assertj.core.api.Assertions;
@@ -20,6 +22,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.after;
@@ -127,6 +130,31 @@ class EventServiceImplTest {
 
         // Then
         assertThat(result).hasValue(afternoon_workout);
+    }
+
+    @DisplayName("[API][GET]이벤트를 검색하는데 에러가 발생한 경우 기본 에러로 예외 처리")
+    @Test
+    void givenDataException_whenSearchingEvents_thenThrowsGeneralException() {
+        // Given
+        /**
+         * findEvents를 호출 했을때, 예외가 발생해서 예외를 반환할때
+         */
+        String exceptionMessage = "Testing Exception";
+        RuntimeException e = new RuntimeException(exceptionMessage);
+        given(eventRepository.findEvents(any(), any(), any(), any(), any()))
+                .willThrow(e);
+
+        // When
+        /**
+         * 위에서 예외를 받도록 했기 때문에 findEvnets를 호출했을때 예외 발생
+         */
+        Throwable thrown = catchThrowable(() -> eventService.findEvents(null, null, null, null, null));
+
+        //Then
+        assertThat(thrown)
+                .isInstanceOf(GeneralException.class)
+                .hasMessageContaining(ErrorCode.DATA_ACCESS_ERROR.getMessage());
+        then(eventRepository).should().findEvents(any(), any(), any(), any(), any());
     }
 
     @DisplayName("[API][POST] 이벤트 정보가 주어지면, 이벤트를 생성하고 true 반환")
