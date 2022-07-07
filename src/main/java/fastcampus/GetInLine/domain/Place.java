@@ -22,7 +22,7 @@ public class Place extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, columnDefinition = "varchar default 'COMMON'")
+    @Column(nullable = false, columnDefinition = "varchar(20) default 'COMMON'") // MySQL 으로 DB를 설정 시 varchar 의 크기를 지정해줘야됨
     @Enumerated(EnumType.STRING)
     private PlaceType placeType;
 

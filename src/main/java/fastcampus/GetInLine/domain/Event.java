@@ -28,7 +28,7 @@ public class Event extends TimeEntity {
     @Column(nullable = false)
     private String eventName;
 
-    @Column(nullable = false, columnDefinition = "varchar default 'OPENED'")
+    @Column(nullable = false, columnDefinition = "varchar(20) default 'OPENED'") // MySQL 으로 DB를 설정 시 varchar 의 크기를 지정해줘야됨
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
 
