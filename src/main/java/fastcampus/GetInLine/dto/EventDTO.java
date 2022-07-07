@@ -1,5 +1,6 @@
 package fastcampus.GetInLine.dto;
 
+import fastcampus.GetInLine.domain.Place;
 import fastcampus.GetInLine.domain.constant.EventStatus;
 import lombok.Getter;
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 public class EventDTO {
 
-    private Long placeId;
+    private Place place;
     @NotBlank private String eventName;
     @NotNull private EventStatus eventStatus;
     @NotNull private LocalDateTime eventStartDatetime;
@@ -22,10 +23,10 @@ public class EventDTO {
     public EventDTO() {
     }
 
-    public EventDTO(Long placeId, String eventName, EventStatus eventStatus,
+    public EventDTO(Place place, String eventName, EventStatus eventStatus,
                     LocalDateTime eventStartDatetime, LocalDateTime eventEndDatetime,
                     Integer currentNumberOfPeople, Integer capacity, String memo) {
-        this.placeId = placeId;
+        this.place = place;
         this.eventName = eventName;
         this.eventStatus = eventStatus;
         this.eventStartDatetime = eventStartDatetime;
@@ -35,17 +36,17 @@ public class EventDTO {
         this.memo = memo;
     }
 
-    public static EventDTO of(Long placeId, String eventName, EventStatus eventStatus,
+    public static EventDTO of(Place place, String eventName, EventStatus eventStatus,
                               LocalDateTime eventStartDatetime, LocalDateTime eventEndDatetime,
                               Integer currentNumberOfPeople, Integer capacity, String memo) {
-        return new EventDTO(placeId, eventName, eventStatus, eventStartDatetime, eventEndDatetime, currentNumberOfPeople, capacity, memo);
+        return new EventDTO(place, eventName, eventStatus, eventStartDatetime, eventEndDatetime, currentNumberOfPeople, capacity, memo);
     }
 
     public static EventDTO from(EventDTO eventDTO) {
         if (eventDTO.equals(null)) {
             return null;
         }
-        return EventDTO.of(eventDTO.getPlaceId(), eventDTO.getEventName(), eventDTO.getEventStatus(),
+        return EventDTO.of(eventDTO.getPlace(), eventDTO.getEventName(), eventDTO.getEventStatus(),
                 eventDTO.getEventStartDatetime(), eventDTO.getEventEndDatetime(), eventDTO.getCurrentNumberOfPeople(),
                 eventDTO.getCapacity(), eventDTO.getMemo());
     }

@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @Table(indexes = {
-        @Index(columnList = "placeId"),
         @Index(columnList = "eventName"),
         @Index(columnList = "eventStartDateTime"),
         @Index(columnList = "eventEndDateTime")
@@ -22,8 +21,8 @@ public class Event extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long placeId;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false) // 여러개의 이벤트가 하나의 장소에서 일어남
+    private Place place;
 
     @Column(nullable = false)
     private String eventName;
@@ -51,11 +50,11 @@ public class Event extends TimeEntity {
     public Event() {
     }
 
-    public Event(Long id, Long placeId, String eventName, EventStatus eventStatus,
+    public Event(Long id, Place place, String eventName, EventStatus eventStatus,
                  LocalDateTime eventStartDatetime, LocalDateTime eventEndDatetime,
                  Integer currentNumberOfPeople, Integer capacity, String memo) {
         this.id = id;
-        this.placeId = placeId;
+        this.place = place;
         this.eventName = eventName;
         this.eventStatus = eventStatus;
         this.eventStartDatetime = eventStartDatetime;
@@ -65,10 +64,10 @@ public class Event extends TimeEntity {
         this.memo = memo;
     }
 
-    public Event of(Long id, Long placeId, String eventName, EventStatus eventStatus,
+    public Event of(Long id, Place place, String eventName, EventStatus eventStatus,
                  LocalDateTime eventStartDatetime, LocalDateTime eventEndDatetime,
                  Integer currentNumberOfPeople, Integer capacity, String memo) {
 
-        return new Event(id, placeId, eventName, eventStatus, eventStartDatetime, eventEndDatetime, currentNumberOfPeople, capacity, memo);
+        return new Event(id, place, eventName, eventStatus, eventStartDatetime, eventEndDatetime, currentNumberOfPeople, capacity, memo);
     }
 }

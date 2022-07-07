@@ -2,6 +2,7 @@ package fastcampus.GetInLine.controller.viewController.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fastcampus.GetInLine.constant.ErrorCode;
+import fastcampus.GetInLine.domain.Place;
 import fastcampus.GetInLine.domain.constant.EventStatus;
 import fastcampus.GetInLine.domain.constant.PlaceType;
 import fastcampus.GetInLine.dto.EventDTO;
@@ -101,7 +102,7 @@ class APIEventControllerTest {
     void givenWrongEvent_whenCreatingAnEvent_thenReturnsFailedStandardResponse() throws Exception {
         // Given
         EventDTO eventResponse = EventDTO.of(
-                1L,
+                new Place(1L),
                 " ",
                 null,
                 null,
@@ -127,7 +128,7 @@ class APIEventControllerTest {
 
     private EventDTO createEventDTO() {
         return EventDTO.of(
-                1L,
+                new Place(1L),
                 "오후 운동",
                 EventStatus.OPENED,
                 LocalDateTime.of(2021, 1, 1, 13, 0, 0),

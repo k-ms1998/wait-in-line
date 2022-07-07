@@ -26,7 +26,7 @@ public interface DataRestEventRepository
     @Override
     default void customize(QuerydslBindings bindings, QEvent root) {
         bindings.excludeUnlistedProperties(true);
-        bindings.including(root.placeId, root.eventName, root.eventStatus, root.eventStartDatetime, root.eventEndDatetime); // 파라미터로 검색이 가능하도록 할 필드들 지정
+        bindings.including(root.place.placeName, root.eventName, root.eventStatus, root.eventStartDatetime, root.eventEndDatetime); // 파라미터로 검색이 가능하도록 할 필드들 지정
         bindings.bind(root.eventName).first(StringExpression::likeIgnoreCase);      // eventName으로 검색 할때, exactMatch가 아닌 like로 가능하도록 설정
         bindings.bind(root.eventStartDatetime).first(ComparableExpression::goe);    // eventStartDateTime으로 검색 할때, 크거나 같은 값을 가진 값들로 검색하도록 설정
         bindings.bind(root.eventEndDatetime).first(ComparableExpression::loe);      // eventEndDateTime으로 검색 할때, 작거나 같은 값을 가진 값들로 검색하도록 설정

@@ -1,5 +1,6 @@
 package fastcampus.GetInLine.controller.viewController;
 
+import fastcampus.GetInLine.domain.Place;
 import fastcampus.GetInLine.domain.constant.EventStatus;
 import fastcampus.GetInLine.dto.EventDTO;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class EventController {
         // TODO: 임시 데이터. 추후 삭제 예정
         map.put("events", List.of(
                 EventDTO.of(
-                        1L,
+                        new Place(1L),
                         "오전 운동",
                         EventStatus.OPENED,
                         LocalDateTime.of(2021, 1, 1, 13, 0, 0),
@@ -34,7 +35,7 @@ public class EventController {
                         20,
                         "마스크 꼭 착용하세요. 물을 꼭 준비하세요."
                 ), EventDTO.of(
-                        2L,
+                        new Place(2L),
                         "오후 운동",
                         EventStatus.OPENED,
                         LocalDateTime.of(2021, 1, 1, 13, 0, 0),

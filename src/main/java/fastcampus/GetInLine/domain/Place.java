@@ -3,10 +3,13 @@ package fastcampus.GetInLine.domain;
 import fastcampus.GetInLine.domain.BaseEntity.TimeEntity;
 import fastcampus.GetInLine.domain.constant.PlaceType;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,6 +19,7 @@ import java.time.LocalDateTime;
         @Index(columnList = "phoneNumber"),
 })
 @EntityListeners(AuditingEntityListener.class)
+@ToString(exclude = {"events"})
 public class Place extends TimeEntity {
 
     @Id
@@ -40,7 +44,14 @@ public class Place extends TimeEntity {
 
     private String memo;
 
+    @OneToMany(mappedBy = "place", fetch = FetchType.EAGER)
+    private List<Event> events = new LinkedList<>();
+
     public Place() {
+    }
+
+    public Place(Long id) {
+        this.id = id;
     }
 
     public Place(Long id, PlaceType placeType, String placeName, String address, String phoneNumber, Integer capacity, String memo) {
