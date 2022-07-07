@@ -8,6 +8,7 @@ import fastcampus.GetInLine.repository.EventRepository;
 import fastcampus.GetInLine.repository.EventRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,11 +16,13 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EventServiceImpl implements EventService {
 
     private final EventRepositoryImpl eventRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventDTO> findEvents(Long placeId, String eventName,
                                      EventStatus eventStatus, LocalDateTime eventStartDatetime, LocalDateTime eventEndDatetime) {
 
@@ -32,6 +35,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<EventDTO> findEvent(Long eventId) {
         return eventRepository.findEvent(eventId);
     }
